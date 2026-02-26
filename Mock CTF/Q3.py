@@ -11,35 +11,42 @@ Ciphertext: 6715d68b5f16bae4fba5d5c8d8db1067a8b4
 Copy/paste the modified ciphertext (hex-encoded) in the text box below.
 """
 
-# Original and desired plaintexts
-original_plaintext = "Give Mallory $1000"
-desired_plaintext = "Give Mallory $3759"
+# Original ciphertext (hex-encoded)
+ct_hex = "6715d68b5f16bae4fba5d5c8d8db1067a8b4"
 
-# Original ciphertext in hex
-ciphertext_hex = "6715d68b5f16bae4fba5d5c8d8db1067a8b4"
+# Convert hex to bytes
+ct = bytes.fromhex(ct_hex)
 
-# Convert hex ciphertext to bytes
-ciphertext = bytes.fromhex(ciphertext_hex)
-
-# Convert plaintexts to bytes
-original_pt_bytes = original_plaintext.encode('utf-8')
-desired_pt_bytes = desired_plaintext.encode('utf-8')
+# Known plaintext and desired plaintext in bytes
+original_plaintext = b"Give Mallory $1000"
+target_plaintext = b"Give Mallory $3759"
 
 print(f"Original plaintext: {original_plaintext}")
-print(f"Original plaintext (hex): {original_pt_bytes.hex()}")
-print(f"Ciphertext (hex): {ciphertext_hex}")
-print(f"\nDesired plaintext: {desired_plaintext}")
-print(f"Desired plaintext (hex): {desired_pt_bytes.hex()}")
+print(f"Target plaintext:   {target_plaintext}")
+print(f"Original ciphertext: {ct_hex}")
 
-# In CTR mode: Ciphertext = Plaintext XOR Keystream
-# Therefore: Keystream = Plaintext XOR Ciphertext
-keystream = bytes([p ^ c for p, c in zip(original_pt_bytes, ciphertext)])
-print(f"\nDerived keystream (hex): {keystream.hex()}")
+# In CTR mode, to change plaintext from P1 to P2, we XOR the ciphertext with (P1 XOR P2)
+# This works because: C = P1 XOR K, so C' = C XOR P1 XOR P2 = P1 XOR K XOR P1 XOR P2 = P2 XOR K
 
-# To create new ciphertext: New_Ciphertext = New_Plaintext XOR Keystream
-new_ciphertext = bytes([p ^ k for p, k in zip(desired_pt_bytes, keystream)])
-print(f"\nNew ciphertext (hex): {new_ciphertext.hex()}")
+# Original Ciphertext = Original Plaintext XORed with Keystream (C = P1 XOR K)
+# Modified Ciphertext = Original Ciphertext XOR Original Plaintext XOR Target Plaintext (C' = C XOR P1 XOR P2)
 
-# Verify by decrypting
-verify_decrypt = bytes([c ^ k for c, k in zip(new_ciphertext, keystream)])
-print(f"\nVerification - decrypted message: {verify_decrypt.decode('utf-8')}")
+# Convert ciphertext to a list so we can modify it
+modified_ct = list(ct)
+
+# Find positions where plaintext differs and modify ciphertext
+for i in range(len(original_plaintext)):
+    if original_plaintext[i] != target_plaintext[i]:
+        # XOR the ciphertext byte with (old_byte XOR new_byte)
+        modified_ct[i] = modified_ct[i] ^ original_plaintext[i] ^ target_plaintext[i]
+        # print(f"Position {i}: '{chr(original_plaintext[i])}' -> '{chr(target_plaintext[i])}'")
+
+# Convert back to bytes and then to hex
+modified_ct = bytes(modified_ct)
+modified_ct_hex = modified_ct.hex()
+
+print(f"\nModified ciphertext: {modified_ct_hex}\n")
+
+# Verification (if we had the key and nonce, this would decrypt to target_plaintext)
+print("When decrypted at the recipient, this will produce:")
+print(f"{target_plaintext.decode()}")
