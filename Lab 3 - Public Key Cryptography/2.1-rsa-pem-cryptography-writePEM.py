@@ -18,9 +18,9 @@ pem_priv = private_key.private_bytes(
 )
 
 # Write the Public Key to a file
-with open("./Lab 3 - Public Key Cryptography/public.pem", "wb") as pub_file:
+with open("./Lab 3 - Public Key Cryptography/RSA-public.pem", "wb") as pub_file:
     pub_file.write(pem_pub)
 
 # Write the Private Key to a file
-with open("./Lab 3 - Public Key Cryptography/private.pem", "wb") as priv_file:
+with open("./Lab 3 - Public Key Cryptography/RSA-private.pem", "wb") as priv_file:
     priv_file.write(pem_priv)

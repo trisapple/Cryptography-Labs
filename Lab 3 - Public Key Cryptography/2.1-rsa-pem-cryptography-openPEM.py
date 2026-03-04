@@ -1,12 +1,12 @@
 from cryptography.hazmat.primitives.asymmetric import padding
 from cryptography.hazmat.primitives import serialization, hashes
 
-with open("./Lab 3 - Public Key Cryptography/private.pem", "rb") as key_file:
+with open("./Lab 3 - Public Key Cryptography/RSA-private.pem", "rb") as key_file:
     private_key = serialization.load_pem_private_key(
         key_file.read(),
         password = b'mypassword'
     )
-with open("./Lab 3 - Public Key Cryptography/public.pem", "rb") as key_file:
+with open("./Lab 3 - Public Key Cryptography/RSA-public.pem", "rb") as key_file:
     public_key = serialization.load_pem_public_key(
         key_file.read()
     )
