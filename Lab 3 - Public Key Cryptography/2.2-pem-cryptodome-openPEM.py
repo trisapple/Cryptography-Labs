@@ -6,13 +6,13 @@ message = b"My secret message"
 # generate RSA key
 key = RSA.generate(bits=2048, e=65537)
 
-pwd = b"secret"
+pwd = b"mypassword"
 # load private key
-with open("./Lab 3 - Public Key Cryptography/2.2-private.pem", "rb") as f:
+with open("./Lab 3 - Public Key Cryptography/private.pem", "rb") as f:
     data = f.read()
     private_pem = RSA.import_key(data, passphrase=pwd)
 # load public key
-with open("./Lab 3 - Public Key Cryptography/2.2-public.pem", "rb") as f:
+with open("./Lab 3 - Public Key Cryptography/public.pem", "rb") as f:
     data = f.read()
     public_pem = RSA.import_key(data)
 

@@ -6,9 +6,9 @@ message = b"My secret message"
 # generate RSA key
 key = RSA.generate(bits=2048, e=65537)
 
-pwd = b"secret"
+pwd = b"mypassword"
 # serialize private key
-with open("./Lab 3 - Public Key Cryptography/2.2-private.pem", "wb") as f:
+with open("./Lab 3 - Public Key Cryptography/private.pem", "wb") as f:
     data = key.export_key(
         passphrase=pwd,
         pkcs=8,
@@ -18,6 +18,6 @@ with open("./Lab 3 - Public Key Cryptography/2.2-private.pem", "wb") as f:
     f.write(data)
 
 # serialize public key
-with open("./Lab 3 - Public Key Cryptography/2.2-public.pem", "wb") as f:
+with open("./Lab 3 - Public Key Cryptography/public.pem", "wb") as f:
     data = key.publickey().export_key()
     f.write(data)
