@@ -1,0 +1,22 @@
+import os
+from cryptography.hazmat.primitives import hashes
+from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
+
+# Salts should be randomly generated
+salt = os.urandom(16)
+# Derive key
+kdf = PBKDF2HMAC(
+    algorithm=hashes.SHA256(),
+    length=32,
+    salt=salt,
+    iterations=480000,
+)
+key = kdf.derive(b"secret passphrase")
+# Verify key
+kdf = PBKDF2HMAC(
+    algorithm=hashes.SHA256(),
+    length=32,
+    salt=salt,
+    iterations=480000,
+)
+kdf.verify(b"secret passphrase", key)
