@@ -7,7 +7,7 @@ cisco64chars = "./0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz
 table = str.maketrans(cisco64chars, base64chars)
 
 # Copy the salt from the cisco file
-salt = b"Sz9isKUcavFN33"
+salt = b"Sz9isKUcavFN33" # supersecret
 
 # Convert the given cisco base64-encoded hash to bytes
 # Note that standard base64-encoded strings must be a multiple of 4 bytes -- if not, pad with "=" characters
