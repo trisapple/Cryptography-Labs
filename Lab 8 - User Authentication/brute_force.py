@@ -8,12 +8,10 @@ table = str.maketrans(cisco64chars, base64chars)
 
 # Copy the salt from the cisco file
 salt = b"Sz9isKUcavFN33" # supersecret
-# salt = b"YQTTRba.aM0Ar"
 
 # Convert the given cisco base64-encoded hash to bytes
 # Note that standard base64-encoded strings must be a multiple of 4 bytes -- if not, pad with "=" characters
 cisco_hash = "Pye28w411Wc/2byQhN3yMBQ/aPOp4qsi2Da1Vk0oP9s"
-# cisco_hash = "5dw/I4GCAjBXlf1xFb64o3u6SnECgdqKDDcfssSecHs"
 base64_hash = cisco_hash.translate(table)
 padding_length = (-len(base64_hash)) % 4
 base64_hash += "=" * padding_length
