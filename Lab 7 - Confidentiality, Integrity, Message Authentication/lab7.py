@@ -29,7 +29,7 @@ def break_two_time_pad(c1_hex, c2_hex):
     drag_crib(guess, xor_sum)
 
 if __name__ == "__main__":
-    # Ciphertexts provided in the lab document [cite: 107, 108]
+    # Ciphertexts provided in the lab document
     ciphertext1 = "654d1326304618fab96ec5cfeca981df63466513e16bc8fe981ed215d4c876436fc950ab87f779" # to be or not to be that is the question
     ciphertext2 = "78441325214611e1eb73de9bb5b29bdf654c6509e67e9cad840e9104d9c9764668d503be89f97e81" # if at first you do not succeed try again
     
